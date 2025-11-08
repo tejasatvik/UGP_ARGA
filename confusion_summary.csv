@@ -1,0 +1,11 @@
+predicted,solved,count
+ccg,nbccg,13
+ccgbr,nbccg,12
+mcccg,nbccg,9
+mcccg,na,6
+ccgbr,na,6
+na,nbccg,6
+nbvcg,nbccg,5
+ccgbr2,nbccg,4
+nbccg,ccgbr,2
+mcccg,ccgbr,2
