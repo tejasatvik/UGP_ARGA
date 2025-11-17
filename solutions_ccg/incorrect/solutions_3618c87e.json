@@ -1,0 +1,1 @@
+{"abstraction": "ccg", "apply_call": [{"filters": ["filter_by_color"], "filter_params": [{"color": 1, "exclude": false}], "transformation": ["remove_node"], "transformation_params": [{}]}], "train_error": 5, "test_error": 0.08, "time": 1800.0020730495453, "nodes_explored": {"total_nodes_explored": 1315785, "total_unique_frontier_nodes": 75172, "frontier_nodes_expanded": 4564}}
