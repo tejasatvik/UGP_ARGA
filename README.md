@@ -78,5 +78,3 @@ To compute the Spearman correlation and accuracy metrics:
 ```bash
 python src/evaluate.py --dataset_a data/dataset_a.csv --dataset_b data/dataset_b.json
 ```
-
-Would you like me to help you draft a specific README section for the "Qualitative Rationales" mentioned in Dataset B?
