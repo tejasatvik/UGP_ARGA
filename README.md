@@ -1,28 +1,99 @@
-# ARGA: Abstract Reasoning with Graph Abstractions
+LLM-Guided Abstraction Selection for the ARGA Framework
 
-This repository contains the implementation for ARGA as described in the AAAI-23 paper [Graphs, Constraints, and Search for the Abstraction and Reasoning Corpus](https://arxiv.org/abs/2210.09880).
-Some code were edited for formalism, which caused some small variations in the results as presented in the paper.
+This repository implements a neuro-symbolic approach to solving the Abstraction and Reasoning Corpus (ARC). By integrating Large Language Models (LLMs) as high-level "structural intuition" providers, we optimize the Abstract Reasoning with Graph Abstractions (ARGA) framework.
 
-To run ARGA on any ARC task, simply call
+The core of this research demonstrates that LLMs can accurately predict which graph-based abstraction (e.g., nbccg, ccgbr, mcccg) is most likely to solve a specific ARC task, significantly pruning the search space for symbolic solvers.
 
-`
-python main.py taskid.json tasktype(training/evaluation)
-`
+🚀 Key Research Findings
 
-for example, to run the task #ddf7fa4f:
+Based on an empirical study of 54 ARC tasks and 9 distinct abstraction schemas:
 
-`
-python main.py ddf7fa4f.json training
-`
+State-of-the-Art Priors: GPT-5's Top-3 abstraction predictions achieve a success rate of $88.89\%$, significantly outperforming the solver's historically strongest static heuristics ($79.63\%$).
 
-the results will be stored under the `solutions` folder and the visualization for the results will be stored under the `images` folder.
+Strong Statistical Correlation: There is a significant correlation between LLM intuition and solver performance (Spearman $\rho \approx 0.27, p < 10^{-9}$), suggesting that LLMs encode structural priors similar to human reasoning.
 
-Example tasks used for illustration in the paper are as follows:
-- recolor task: d2abd087.json
-- dynamic recolor task: ddf7fa4f.json
-- movement task: 3906de3d.json
-- augmentation task: d43fd935.json
+Search Space Reduction: By utilizing LLM-predicted priors, the ARGA solver can prioritize the most promising structural hypotheses, leading to faster convergence and shorter program lengths.
 
-## dataset
-The ids for the 160 selected tasks can be found under `dataset/subset`.
-The full set of the ARC dataset created by Chollet can be found [here](https://github.com/fchollet/ARC) as well as under the `dataset` folder.
+📊 Performance Comparison
+
+Metric
+
+Accuracy / Success Rate
+
+Top-1 LLM Prediction
+
+$57.43\%$
+
+Top-2 LLM Prediction
+
+$83.33\%$
+
+Top-3 LLM Prediction
+
+$88.89\%$
+
+Top-3 Static Baseline
+
+$79.63\%$
+
+📂 Repository Structure
+
+data/:
+
+Dataset A: Empirical solver metrics (success, time, program length) across 9 abstractions.
+
+Dataset B: LLM-generated predictions, confidence scores, and qualitative rationales.
+
+src/: Source code for the modified ARGA solver, graph extraction logic, and LLM inference pipeline.
+
+notebooks/: Jupyter notebooks for statistical analysis and visualization.
+
+docs/: Technical documentation and the full project report (UGP_REPORT.pdf).
+
+🛠️ Installation
+
+Clone the repository:
+
+git clone [https://github.com/tejasatvik/UGP_ARGA.git](https://github.com/tejasatvik/UGP_ARGA.git)
+cd UGP_ARGA
+
+
+Set up the environment:
+
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+pip install -r requirements.txt
+
+
+Configure API Keys:
+Create a .env file or export your key:
+
+export OPENAI_API_KEY='your-api-key'
+
+
+💻 Usage
+
+Generate Solver Metrics
+
+To run the ARGA solver independently across all nine abstractions for benchmarking:
+
+python src/generate_dataset_a.py --tasks_dir ./data/tasks
+
+
+Predict Abstraction Priors
+
+To use the LLM to predict the optimal abstraction for new ARC tasks:
+
+python src/predict_abstractions.py --input ./data/new_tasks.json
+
+
+Evaluate Results
+
+To compute the Spearman correlation and accuracy metrics:
+
+python src/evaluate.py --dataset_a data/dataset_a.csv --dataset_b data/dataset_b.json
+
+
+📄 License
+
+This project is licensed under the MIT License.
